@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minimalist Ad Studio</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+<header>
+  <div class="brand">Minimalist <span>Ad Studio</span></div>
+  <nav>
+    <button data-tab="generate" class="active">Generate</button>
+    <button data-tab="score">Score any ad</button>
+    <button data-tab="rules">Rules</button>
+  </nav>
+  <div id="status" class="status">…</div>
+</header>
+
+<main>
+<!-- ================= GENERATE ================= -->
+<section id="tab-generate" class="tab active">
+  <div class="row">
+    <input id="url" type="url" placeholder="https://beminimalist.co/products/niacinamide-10-with-matmarine" value="https://beminimalist.co/products/salicylic-acid-2">
+    <button id="btn-generate" class="primary">Fetch & generate</button>
+    <button id="btn-paste-toggle" class="ghost">Paste product instead</button>
+  </div>
+  <div id="paste-box" class="paste hidden">
+    <p class="hint">Fallback when the fetch fails. Paste the product title, the visible page text, and an image URL.</p>
+    <input id="paste-title" placeholder="Product title, e.g. Niacinamide 10% Face Serum">
+    <input id="paste-image" placeholder="Product image URL">
+    <input id="paste-price" placeholder="Price, e.g. ₹540">
+    <textarea id="paste-text" rows="8" placeholder="Paste the product page text here"></textarea>
+    <button id="btn-generate-paste" class="primary">Generate from pasted text</button>
+  </div>
+  <div id="gen-progress" class="progress hidden"></div>
+
+  <div id="gen-result" class="hidden">
+    <div class="two-col">
+      <div>
+        <h3>Creative · 1080 × 1080</h3>
+        <div class="ad-frame"><div id="ad" class="ad"></div></div>
+        <div class="row">
+          <button id="btn-export" class="primary">Export PNG</button>
+          <button id="btn-copy-json" class="ghost">Copy JSON</button>
+          <span id="export-note" class="hint"></span>
+        </div>
+      </div>
+      <div>
+        <h3>Copy <span class="hint">(edit, then re-score)</span></h3>
+        <label>Headline<input id="g-headline"></label>
+        <label>Body<textarea id="g-body" rows="3"></textarea></label>
+        <label>CTA<input id="g-cta"></label>
+        <label>Disclaimer<input id="g-disclaimer"></label>
+        <div class="row"><button id="btn-rescore" class="ghost">Re-score edited copy</button><span id="gen-meta" class="hint"></span></div>
+        <details><summary>Source facts used</summary><pre id="g-facts"></pre></details>
+        <details><summary>Fetched product data</summary><pre id="g-product"></pre></details>
+        <div id="gen-score"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCORE ================= -->
+<section id="tab-score" class="tab">
+  <p class="hint">Paste any ad. Text only — the scorer reads copy, not pixels. Describe the visual in the last box if it matters.</p>
+  <div class="two-col">
+    <div>
+      <label>Headline<input id="s-headline" placeholder="Say goodbye to acne forever!"></label>
+      <label>Body<textarea id="s-body" rows="5" placeholder="Our chemical-free niacinamide serum is clinically proven to remove dark spots…"></textarea></label>
+      <label>CTA<input id="s-cta" placeholder="Shop now"></label>
+      <label>Disclaimer<input id="s-disclaimer"></label>
+      <label>What the visual shows (optional)<input id="s-visual" placeholder="e.g. before/after split, model with visibly lighter skin on the right"></label>
+      <div class="row"><button id="btn-score" class="primary">Score</button><button id="btn-example" class="ghost">Load a bad example</button></div>
+    </div>
+    <div id="score-result"></div>
+  </div>
+</section>
+
+<!-- ================= RULES ================= -->
+<section id="tab-rules" class="tab">
+  <p class="hint">Every rule the scorer applies, with the evidence it is derived from. Severity is fixed here; the model only decides which rules fire and where.</p>
+  <div id="rules-list"></div>
+  <details><summary>Scorer system prompt (generated from these rules)</summary><pre id="prompt-scorer"></pre></details>
+  <details><summary>Generator system prompt</summary><pre id="prompt-generator"></pre></details>
+</section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

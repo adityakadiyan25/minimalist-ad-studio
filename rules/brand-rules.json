@@ -14,235 +14,334 @@
   },
   "rules": [
     {
-      "id": "P1", "dimension": "policy", "severity": "BLOCK",
+      "id": "P1",
+      "dimension": "policy",
+      "severity": "BLOCK",
       "name": "Disease treatment / cure claim",
       "catches": "Copy that says the product cures, treats, heals, prevents, eliminates, or gets rid of a medical condition (acne, eczema, psoriasis, dermatitis, rosacea, fungal infection, hair loss/baldness, melasma). Also 'medical-grade', 'prescription-strength', 'clinically treats'.",
       "why": "A cosmetic making a treatment/cure claim is making a drug claim. Under the Drugs & Cosmetics Act 1940 that misbrands the product; the Drugs and Magic Remedies Act 1954 makes public advertising of cure claims a cognizable offence; Cosmetics Rules 2020 r.36 prohibits conveying 'a false or misleading idea'.",
-      "evidence": ["evidence/regulatory.md#instruments-that-apply", "evidence/regulatory.md#claim-categories-and-how-they-land"],
+      "evidence": [
+        "evidence/regulatory.md#instruments-that-apply",
+        "evidence/regulatory.md#claim-categories-and-how-they-land"
+      ],
       "brand_does_instead": "'Reduces Acne, Blackheads & Excessive Oil' · 'wards off acne' · 'Fights Breakout & Blackheads' — outcome and appearance language, never treatment language.",
       "fix": "Reframe as a cosmetic effect: 'helps reduce breakouts', 'reduces excess oil and blackheads', 'for acne-prone skin'.",
       "regex": "\\b(cure[sd]?|curing|treat(s|ed|ment)?|heal(s|ed|ing)?|prevent(s|ed)?|eliminat(e|es|ed)|get(s)? rid of|medical[- ]grade|prescription[- ]strength)\\b[^.!?\\n]{0,40}\\b(acne|pimples|eczema|psoriasis|dermatitis|rosacea|infection|fungal|hair ?loss|baldness|melasma|scars?)\\b"
     },
     {
-      "id": "P2", "dimension": "policy", "severity": "BLOCK",
+      "id": "P2",
+      "dimension": "policy",
+      "severity": "BLOCK",
       "name": "Absolute or guaranteed result",
       "catches": "'100%', 'guaranteed', 'permanent(ly)', 'instant(ly)', 'overnight', 'forever', 'zero/no side effects', 'completely safe', 'works for everyone'.",
       "why": "ASCI Code 1.1 requires claims to be capable of substantiation; 1.4 prohibits misleading by exaggeration. Absolutes cannot be substantiated for a cosmetic. Consumer Protection Act 2019 treats them as misleading advertisement.",
-      "evidence": ["evidence/regulatory.md#asci-code-chapter-i--verbatim-clauses-relied-on"],
+      "evidence": [
+        "evidence/regulatory.md#asci-code-chapter-i--verbatim-clauses-relied-on"
+      ],
       "brand_does_instead": "Every strong claim carries a number and timeframe: '50% after 28 days', '93% of subjects', 'in 2 weeks'.",
       "fix": "Delete the absolute, or replace it with the measured result from the product page.",
-      "regex": "\\b(100 ?%|guarantee[ds]?|permanent(ly)?|instant(ly)?|overnight|forever|(zero|no) side[- ]effects|completely safe|for everyone|works for all)\\b"
+      "regex": "(?<![\\w.])100 ?%|\\b(guarantee[ds]?|permanent(ly)?|instant(ly)?|overnight|forever|(zero|no) side[- ]effects|completely safe|for everyone|works for all)\\b"
     },
     {
-      "id": "P3", "dimension": "policy", "severity": "BLOCK",
+      "id": "P3",
+      "dimension": "policy",
+      "severity": "BLOCK",
       "name": "Authority claim with no result attached",
       "catches": "'Clinically proven', 'clinically tested', 'dermatologist recommended', 'dermatologist tested', 'scientifically proven', 'doctor approved' — when the sentence does not attach a specific measured result, timeframe, or study basis.",
       "why": "ASCI 1.1 (substantiation) and 1.2 (research claims must indicate source). CCPA Guidelines 2022 example: 'dermatologists recommend this product' cannot be rescued by a disclaimer if no such recommendation exists. ASCI's 2023-24 report: 98% of scrutinised beauty ads required modification, this phrase family is the most common cause.",
-      "evidence": ["evidence/regulatory.md", "evidence/product-pages.md#patterns-observed--rule-candidates"],
+      "evidence": [
+        "evidence/regulatory.md",
+        "evidence/product-pages.md#patterns-observed--rule-candidates"
+      ],
       "brand_does_instead": "The brand uses 'clinically proven' — but always bound to a result: 'clinically proven to reduce number of blackheads by 50% after 28 days'. 'Evaluated for safety through patch testing under the supervision of a Dermatologist' — a specific test, not an endorsement.",
       "fix": "Attach the result from the product page ('clinically proven to reduce X by Y% in Z weeks') or state the actual test ('patch-tested under dermatologist supervision'). Otherwise remove.",
       "regex": null,
       "note_for_model": "Do NOT flag when the phrase is followed in the same sentence by a number + timeframe or a named test. That is the brand's own pattern and is compliant."
     },
     {
-      "id": "P4", "dimension": "policy", "severity": "WARN",
+      "id": "P4",
+      "dimension": "policy",
+      "severity": "WARN",
       "name": "Statistic without stated basis",
       "catches": "A percentage, multiplier, or count ('93%', '2x', '9 out of 10') with no indication of what study, population, or timeframe it comes from.",
       "why": "ASCI 1.2: claims based on research should indicate source and date. The scorer cannot verify studies, so this is WARN with an explicit 'verify before spend' instruction, not BLOCK.",
-      "evidence": ["evidence/regulatory.md#asci-code-chapter-i--verbatim-clauses-relied-on"],
+      "evidence": [
+        "evidence/regulatory.md#asci-code-chapter-i--verbatim-clauses-relied-on"
+      ],
       "brand_does_instead": "'90% of subjects noticed visible skin clarity in 4 weeks' — population, outcome, timeframe.",
       "fix": "Add 'in a N-week study of X subjects' or the timeframe the page gives. If the number is not on the product page, remove it.",
       "regex": null
     },
     {
-      "id": "P5", "dimension": "policy", "severity": "BLOCK",
+      "id": "P5",
+      "dimension": "policy",
+      "severity": "BLOCK",
       "name": "Fairness / whitening claim",
       "catches": "'fair', 'fairness', 'whiten(ing)', 'lighten(s) skin', 'brighter complexion' used to mean overall skin-tone change; visuals implying darker skin is undesirable.",
       "why": "ASCI Guidelines for Advertising of Skin Lightening or Fairness Improvement Products prohibit depicting people with darker skin as unattractive, unhappy, or disadvantaged. High reputational risk for this brand specifically.",
-      "evidence": ["evidence/regulatory.md#claim-categories-and-how-they-land"],
+      "evidence": [
+        "evidence/regulatory.md#claim-categories-and-how-they-land"
+      ],
       "brand_does_instead": "'even skin tone', 'reduce melanin concentration' (mechanism), 'fades dark spots', 'brightens dull skin' — spot- and dullness-specific, never overall tone.",
       "fix": "Replace with 'even skin tone', 'reduces dark spots', 'brightens dull skin'. Never 'fair' or 'white'.",
       "regex": "\\b(fair(ness|er)?|whiten(s|ing|er)?|skin[- ]lightening|lighter skin|lighten(s)? (your )?skin)\\b"
     },
     {
-      "id": "P6", "dimension": "policy", "severity": "BLOCK",
+      "id": "P6",
+      "dimension": "policy",
+      "severity": "BLOCK",
       "name": "Reversal / erasure of ageing",
       "catches": "'reverse(s) aging', 'erase(s) wrinkles', 'stop(s) aging', 'turn back the clock', 'look N years younger', 'eliminates wrinkles'.",
       "why": "Reversal is a physiological claim, not a cosmetic one. Schedule J (Drugs Rules 1945) lists 'premature ageing' among conditions for which cure/prevention may not be advertised; DMR Act 1954 covers 'magic' effects. 'Anti-ageing' as a category word is common and handled by L-rules, not here.",
-      "evidence": ["evidence/regulatory.md", "evidence/product-pages.md#pages-35-added-after-pattern-review"],
+      "evidence": [
+        "evidence/regulatory.md",
+        "evidence/product-pages.md#pages-35-added-after-pattern-review"
+      ],
       "brand_does_instead": "'suitable for fading fine lines & wrinkles', 'reduction of wrinkle depth'. NOTE: the Retinol page also says 'helps reverse the signs of aging' — this rule flags that too. See decision log D6.",
       "fix": "'helps reduce the appearance of fine lines and wrinkles'.",
       "regex": "\\b(revers(e|es|ing)|eras(e|es|ing)|stop(s|ping)?|turn(s)? back)\\b[^.!?\\n]{0,25}\\b(ag(e|ing|eing)|wrinkles?|clock)\\b|\\b\\d+ years younger\\b"
     },
     {
-      "id": "P7", "dimension": "policy", "severity": "WARN",
+      "id": "P7",
+      "dimension": "policy",
+      "severity": "WARN",
       "name": "Universal suitability",
       "catches": "'for all skin types', 'suitable for everyone', 'safe for all ages', 'safe during pregnancy' stated without qualification.",
       "why": "ASCI 1.1 (must be capable of substantiation). It also contradicts the brand's own practice of stating age and pregnancy limits per product ('Suitable for: 18+', 'pregnant, and breastfeeding, women should consult their doctor'). The brand's own pages say 'suitable for all skin types' on some products — this rule flags those too (D6).",
-      "evidence": ["evidence/product-pages.md#safetysuitability", "evidence/product-pages.md#revised-patterns-after-pages-35"],
+      "evidence": [
+        "evidence/product-pages.md#safetysuitability",
+        "evidence/product-pages.md#revised-patterns-after-pages-35"
+      ],
       "brand_does_instead": "'Recommended for Combination/Oily Skin' · 'Suitable for: 16+ years of age' · 'Pregnancy/Lactation: Safe' (as a labelled field, product by product).",
       "fix": "Name the skin type or concern it is for. If the page states an age or pregnancy limit, carry it.",
       "regex": "\\b(for|suits?|suitable for|safe for) (all|every|everyone|any) ?(skin ?types?|ages?|one)?\\b"
     },
     {
-      "id": "P8", "dimension": "policy", "severity": "WARN",
+      "id": "P8",
+      "dimension": "policy",
+      "severity": "WARN",
       "name": "Superlative or comparative without basis",
       "catches": "'best', '#1', 'India's most trusted', 'better than', 'only serum that', 'No.1 dermatologist choice'.",
       "why": "ASCI Chapter IV (fair in competition; comparisons must be factual and substantiated). Also off-voice: the brand competes on disclosure, not ranking.",
-      "evidence": ["evidence/regulatory.md", "evidence/brand-voice.md"],
+      "evidence": [
+        "evidence/regulatory.md",
+        "evidence/brand-voice.md"
+      ],
       "brand_does_instead": "States what is in the product and where it is sourced ('Niacinamide comes from Lonza, Switzerland') rather than ranking itself.",
       "fix": "Remove the comparison, or replace with a verifiable fact about the formulation.",
       "regex": "\\b(#\\s?1|no\\.? ?1|number one|the best|india'?s (best|most|no)|better than|the only)\\b"
     },
     {
-      "id": "P9", "dimension": "policy", "severity": "BLOCK",
+      "id": "P9",
+      "dimension": "policy",
+      "severity": "BLOCK",
       "name": "Fear-based or 'chemical-free' framing",
       "catches": "'chemical-free', 'toxin-free', 'no nasties', 'harmful/harsh chemicals', 'poison', '100% natural so it's safe', implying competitor products are dangerous.",
       "why": "'Chemical-free' is literally false for any cosmetic and ASCI has upheld complaints against it as misleading (Chapter I 1.4, misleading by implication). More importantly it is the specific misinformation the founder says the brand was created to counter: 'Consumers were being misled by fear-based marketing, particularly the misconception that 100% natural means safe'. This is the only rule that is BLOCK for brand reasons as much as legal ones.",
-      "evidence": ["evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder", "evidence/regulatory.md#claim-categories-and-how-they-land"],
+      "evidence": [
+        "evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder",
+        "evidence/regulatory.md#claim-categories-and-how-they-land"
+      ],
       "brand_does_instead": "Names specific absences as fact: 'free of OMC, Benzophenone / Oxybenzone, and Homosalate', 'Fragrance Free', 'Essential Oil Free'. Naming what is absent is fine; implying the category is dangerous is not.",
       "fix": "If an absence matters, name the specific ingredient ('fragrance-free'). Delete any implication that chemicals or other products are harmful.",
       "regex": "\\b(chemical[- ]free|toxin[- ]free|no nasties|(harmful|harsh|toxic|nasty) chemicals?|non[- ]toxic|poison)\\b"
     },
     {
-      "id": "P10", "dimension": "policy", "severity": "NOTE",
+      "id": "P10",
+      "dimension": "policy",
+      "severity": "NOTE",
       "name": "Safety qualifier omitted for a restricted active",
       "catches": "Ad promotes retinol/retinal, salicylic acid, glycolic acid, or another active for which the product page states an age or pregnancy restriction, and the ad carries no such qualifier.",
       "why": "ASCI 1.4 — misleading by omission. Advisory only because ad space is limited and the landing page carries it; but the brand's standard is to say it, not hide it.",
-      "evidence": ["evidence/product-pages.md#patterns-observed--rule-candidates"],
+      "evidence": [
+        "evidence/product-pages.md#patterns-observed--rule-candidates"
+      ],
       "brand_does_instead": "Age and pregnancy guidance on every page: 'Suitable for: 18+ years of age', 'Except for pregnant or breastfeeding women and those under 18'.",
       "fix": "One footer line: 'For 18+. Consult a doctor if pregnant or breastfeeding.'",
       "regex": null
     },
-
     {
-      "id": "T1", "dimension": "tone", "severity": "WARN",
+      "id": "T1",
+      "dimension": "tone",
+      "severity": "WARN",
       "name": "Promotional register",
       "catches": "Emoji, 'FREEBIE', 'HURRY', 'Limited time', 'Sale ends', multiple exclamation marks, ALL-CAPS words, an offer as the headline.",
       "why": "Founder: 'Instead of chasing trends or relying on flashy ads, our marketing initiatives are rooted in science-backed information'. WARN not BLOCK because the brand's own homepage runs 'Upto 33% OFF + Freebies' and '🎁' banners — promo register is tolerated, it just isn't the standard. Decision log D5.",
-      "evidence": ["evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder", "evidence/brand-voice.md#homepage-copy-beminimalistco-2026-09-05"],
+      "evidence": [
+        "evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder",
+        "evidence/brand-voice.md#homepage-copy-beminimalistco-2026-09-05"
+      ],
       "brand_does_instead": "Leads with the active and what it does. Offers, where they appear, are in plain text: 'Buy 2, Get 3rd Free'.",
       "fix": "Lead with ingredient + mechanism. Move the offer to a secondary line in sentence case. Remove emoji and exclamation marks.",
-      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]|!{2,}|\\b(FREEBIE|HURRY|LIMITED TIME|SALE ENDS|FLASH SALE|GRAB)\\b"
+      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]|!{2,}|\\b(FREEBIE|HURRY|LIMITED TIME|SALE ENDS|FLASH SALE)\\b"
     },
     {
-      "id": "T2", "dimension": "tone", "severity": "WARN",
+      "id": "T2",
+      "dimension": "tone",
+      "severity": "WARN",
       "name": "Hype / influencer register",
       "catches": "'shocking', 'obsessed', 'game-changer', 'holy grail', 'magic', 'miracle', 'insane', 'wow', 'glass skin', 'must-have', 'viral', first-person gush.",
       "why": "Founder: 'reinforcing our commitment to truth over marketing gimmicks'; 'rather than taking the influencer partnership route'. The brand's paid media does include influencer-style posts, so this is WARN.",
-      "evidence": ["evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"],
+      "evidence": [
+        "evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"
+      ],
       "brand_does_instead": "Measured outcome verbs: 'reduces', 'helps regulate', 'improves the barrier'.",
       "fix": "Replace the hype word with the specific observable outcome from the product page.",
       "regex": "\\b(shocking|obsessed|game[- ]changer|holy grail|magic(al)?|miracle|insane|wow|glass skin|must[- ]have|viral|life[- ]changing)\\b"
     },
     {
-      "id": "T3", "dimension": "tone", "severity": "WARN",
+      "id": "T3",
+      "dimension": "tone",
+      "severity": "WARN",
       "name": "Insecurity hook",
       "catches": "Copy that opens by making the reader feel bad: 'embarrassed by', 'tired of hiding', 'don't let X ruin', 'ugly', 'flawless', 'perfect skin', 'say goodbye to'.",
       "why": "Founder identifies fear-based marketing as the category problem the brand exists to counter. ASCI fairness guidelines also prohibit depicting skin conditions as causing social disadvantage.",
-      "evidence": ["evidence/brand-voice.md", "evidence/regulatory.md"],
+      "evidence": [
+        "evidence/brand-voice.md",
+        "evidence/regulatory.md"
+      ],
       "brand_does_instead": "Names the concern neutrally as a skin type or goal: 'For Acne Prone or Oily Skin', 'For reducing sebum & pores'.",
       "fix": "State the concern as a skin type or goal, not a flaw.",
       "regex": "\\b(embarrass(ed|ing)|tired of hiding|ruin(s|ing)? your|ugly|flawless|perfect skin|say goodbye to|hate your)\\b"
     },
     {
-      "id": "T4", "dimension": "tone", "severity": "WARN",
+      "id": "T4",
+      "dimension": "tone",
+      "severity": "WARN",
       "name": "Outcome asserted without explanation",
       "catches": "The ad promises a result but never says what the active ingredient is or what it does. No mechanism, no 'how'.",
       "why": "The brand is education-first: 'explanatory posts', 'ingredient and product education', 'People want to understand what they're using and why'. Product pages always give the mechanism ('dissolving dead skin cells and sebum from inner walls of pores').",
-      "evidence": ["evidence/brand-voice.md", "evidence/product-pages.md#patterns-observed--rule-candidates"],
+      "evidence": [
+        "evidence/brand-voice.md",
+        "evidence/product-pages.md#patterns-observed--rule-candidates"
+      ],
       "brand_does_instead": "'Pure 10% Niacinamide ... reduces the sebum level of the skin, improves the barrier'.",
       "fix": "Add one line: what the active is and what it does.",
       "regex": null
     },
     {
-      "id": "T5", "dimension": "tone", "severity": "NOTE",
+      "id": "T5",
+      "dimension": "tone",
+      "severity": "NOTE",
       "name": "Celebrity or influencer as authority",
       "catches": "'as seen on', 'X's favourite', 'celebrity-approved', 'loved by influencers', named personalities as the reason to buy.",
       "why": "Founder: 'We collaborate with dermatologists ... rather than taking the influencer partnership route'. Authority in this brand is data and dermatologists.",
-      "evidence": ["evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"],
+      "evidence": [
+        "evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"
+      ],
       "brand_does_instead": "'evaluated for safety through patch testing under the supervision of a Dermatologist'; supplier provenance.",
       "fix": "Replace with the study result or the dermatologist patch-test statement.",
       "regex": null
     },
     {
-      "id": "T6", "dimension": "tone", "severity": "NOTE",
+      "id": "T6",
+      "dimension": "tone",
+      "severity": "NOTE",
       "name": "Transformation narrative",
       "catches": "'transform', 'new skin', 'reborn', 'glow-up', 'skin makeover', before/after framing in copy.",
       "why": "The brand keeps softness literal: 'baby-soft' is about texture, not a transformation promise (pattern 7). Transformation language also drifts toward P2/P6 territory.",
-      "evidence": ["evidence/product-pages.md#patterns-observed--rule-candidates"],
+      "evidence": [
+        "evidence/product-pages.md#patterns-observed--rule-candidates"
+      ],
       "brand_does_instead": "Observable, specific descriptors: 'skin looks clear', 'skin felt less oily throughout the day'.",
       "fix": "Describe the observable change and its timeframe.",
       "regex": null
     },
-
     {
-      "id": "L1", "dimension": "language", "severity": "WARN",
+      "id": "L1",
+      "dimension": "language",
+      "severity": "WARN",
       "name": "Hero ingredient named without its concentration",
       "catches": "'Niacinamide serum', 'our salicylic acid formula', 'with Vitamin C' — the active is named but the percentage that is part of the product's own name is missing anywhere in the ad.",
       "why": "Brand pillar #1: 'Full disclosure of ingredients used & their concentration'. The % is literally in every product name ('Niacinamide 10% Face Serum'). Dropping it drops the brand's core differentiator.",
-      "evidence": ["evidence/brand-voice.md#product-naming-convention-exact", "evidence/product-pages.md#patterns-observed--rule-candidates"],
+      "evidence": [
+        "evidence/brand-voice.md#product-naming-convention-exact",
+        "evidence/product-pages.md#patterns-observed--rule-candidates"
+      ],
       "brand_does_instead": "'10% Niacinamide', '2% salicylic acid', 'Retinol 0.6%'.",
       "fix": "Use the product's exact name form: '<Active> <N%> <Format>'.",
       "regex": null
     },
     {
-      "id": "L2", "dimension": "language", "severity": "WARN",
+      "id": "L2",
+      "dimension": "language",
+      "severity": "WARN",
       "name": "Unhedged outcome verb on a cosmetic claim",
       "catches": "'removes', 'erases', 'vanishes', 'kills', 'destroys', 'wipes out', 'banishes' applied to spots, pores, oil, blackheads, dullness, lines. (Cure/treat + disease is P1; this is the softer, cosmetic-outcome version.)",
       "why": "Pattern 3: the brand's verbs are 'helps', 'reduces', 'reduces the appearance of', 'fights', 'wards off'. Never total removal. This is also where ASCI 1.4 exaggeration starts.",
-      "evidence": ["evidence/product-pages.md#patterns-observed--rule-candidates"],
+      "evidence": [
+        "evidence/product-pages.md#patterns-observed--rule-candidates"
+      ],
       "brand_does_instead": "'reduces sebum and appearance of pores', 'helps regulate oiliness'.",
       "fix": "Swap to 'helps reduce' / 'reduces the appearance of' / 'visibly reduces'.",
       "regex": "\\b(remov(e|es|ing)|eras(e|es)|vanish(es)?|kill(s)?|destroy(s)?|wipe(s)? out|banish(es)?|zap(s)?)\\b[^.!?\\n]{0,30}\\b(spots?|pores?|oil|blackheads?|whiteheads?|dullness|lines?|wrinkles?|pigmentation|tan)\\b"
     },
     {
-      "id": "L3", "dimension": "language", "severity": "NOTE",
+      "id": "L3",
+      "dimension": "language",
+      "severity": "NOTE",
       "name": "Result claim without timeframe",
       "catches": "A benefit is stated ('reduces blackheads', 'evens skin tone') with no 'in N weeks' / 'after N days', when the product page gives one.",
       "why": "Pattern 1: every strong claim on the brand's pages carries a timeframe or population. Timeframe is also what keeps a claim on the substantiable side of ASCI 1.1.",
-      "evidence": ["evidence/product-pages.md#patterns-observed--rule-candidates"],
+      "evidence": [
+        "evidence/product-pages.md#patterns-observed--rule-candidates"
+      ],
       "brand_does_instead": "'improve skin complexion in 2 weeks', 'reduce number of blackheads by 50% after 28 days', 'visible skin clarity in 4 weeks'.",
       "fix": "Add the timeframe the product page states. If none exists, leave the claim hedged and unquantified.",
       "regex": null
     },
     {
-      "id": "L4", "dimension": "language", "severity": "NOTE",
+      "id": "L4",
+      "dimension": "language",
+      "severity": "NOTE",
       "name": "Vague benefit noun with no mechanism",
       "catches": "'glow', 'radiance', 'nourish', 'rejuvenate', 'detox', 'revitalise', 'youthful', 'luminous' as the whole claim.",
       "why": "Pattern 2, mechanism over magic. The brand uses 'glow' only when a study caption uses it ('improvement in skin glow & reduction in dullness'), and pairs it with the measurable term.",
-      "evidence": ["evidence/product-pages.md"],
+      "evidence": [
+        "evidence/product-pages.md"
+      ],
       "brand_does_instead": "'brightens dull skin and fades dark spots', 'scavenge free radicals to reduce redness'.",
       "fix": "Name what happens: 'brightens dull skin', 'reduces dark spots', 'supports the skin barrier'.",
       "regex": null
     },
     {
-      "id": "L5", "dimension": "language", "severity": "NOTE",
+      "id": "L5",
+      "dimension": "language",
+      "severity": "NOTE",
       "name": "'Natural' / 'herbal' / 'organic' as a virtue",
       "catches": "'natural', 'all-natural', 'herbal', 'ayurvedic', 'organic', 'plant-based' presented as the reason the product is good or safe.",
       "why": "Founder: the brand was built to 'debunk the myth of chemical-free skincare' and the misconception that '100% natural means safe and effective'. (The SPF page uses 'organic' in its chemistry sense — 'organic, oil based ... filter' — which is fine.) 'Chemical-free' itself is P9.",
-      "evidence": ["evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"],
+      "evidence": [
+        "evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"
+      ],
       "brand_does_instead": "Names the active, its concentration, its supplier: 'Niacinamide comes from Lonza, Switzerland'.",
       "fix": "Replace with the specific active and concentration.",
       "regex": null
     },
     {
-      "id": "L6", "dimension": "language", "severity": "NOTE",
+      "id": "L6",
+      "dimension": "language",
+      "severity": "NOTE",
       "name": "Product name altered from the official form",
       "catches": "'Niacinamide Serum 10', 'Nia 10%', '10 percent niacinamide serum', 'Salicylic Serum' — any rendering that differs from the product's listed title.",
       "why": "The name is the disclosure. Consistency with pack and page is part of the transparency claim.",
-      "evidence": ["evidence/brand-voice.md#product-naming-convention-exact"],
+      "evidence": [
+        "evidence/brand-voice.md#product-naming-convention-exact"
+      ],
       "brand_does_instead": "'Niacinamide 10% Face Serum', 'Salicylic Acid 2% Face Serum'.",
       "fix": "Use the exact product title.",
       "regex": null
     },
-
     {
-      "id": "G1", "dimension": "policy", "severity": "BLOCK",
+      "id": "G1",
+      "dimension": "policy",
+      "severity": "BLOCK",
       "name": "Fact not present in the source page (generator mode only)",
       "catches": "In generator mode, any number, ingredient, study, supplier, or benefit in the generated copy that does not appear in the fetched product page content.",
       "why": "The generator's source boundary (decision log D6). An invented '95% saw results' is the single most expensive thing this tool could output, because it looks exactly like the brand's real claims.",
-      "evidence": ["docs/decision-log.md#d6"],
+      "evidence": [
+        "docs/decision-log.md#d6"
+      ],
       "brand_does_instead": "n/a — this is a tool constraint.",
       "fix": "Remove the fact or replace it with one from the source.",
       "regex": null,
