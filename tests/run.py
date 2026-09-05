@@ -37,6 +37,10 @@ for c in CASES:
     if c.get("needs_model") and not model_on:
         skipped += 1; print(f"SKIP  {c['name']}"); continue
     s = score_ad(c["ad"], mode="any")
+    if model_on and not s.get("model_ran"):
+        print(f"ERROR model layer did not run: {s.get('model_error')}"); sys.exit(2)
+    if c.get("needs_model") and not s.get("model_ran"):
+        print(f"ERROR model layer did not run: {s.get('model_error')}"); sys.exit(2)
     ids = {f["rule_id"] for f in s["findings"]}
     missing = [i for i in c["must"] if i not in ids]; wrong = [i for i in c["must_not"] if i in ids]
     verdict_ok = s["verdict"] == c["verdict"] if model_on else (c["verdict"] == "PASS" or s["verdict"] == c["verdict"])
