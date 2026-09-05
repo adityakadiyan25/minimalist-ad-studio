@@ -58,15 +58,24 @@ function renderAd() {
     </div>`;
   // The canvas is fixed at 1080px. If the text column is taller than that, the footer — and the
   // disclaimer with it — is cropped. That must never export silently.
-  const txt = $('#ad .txt');
-  STATE.overflow = txt.scrollHeight > txt.clientHeight + 1;
-  $('#ad').parentElement.classList.toggle('overflow', STATE.overflow);
+  // First try to fit: shrink headline, body and badge together, down to a floor. The disclaimer
+  // and CTA never shrink — they are the parts that must stay legible.
+  const ad = $('#ad'), txt = $('#ad .txt');
+  const fits = () => txt.scrollHeight <= txt.clientHeight + 1;
+  let fit = 1;
+  ad.style.setProperty('--fit', fit);
+  while (!fits() && fit > 0.7) { fit = Math.round((fit - 0.05) * 100) / 100; ad.style.setProperty('--fit', fit); }
+  STATE.fit = fit;
+  STATE.overflow = !fits();
+  ad.parentElement.classList.toggle('overflow', STATE.overflow);
 }
 function gateExport(score) {
   const blocked = score.verdict === 'BLOCKED';
   $('#btn-export').disabled = blocked || !!STATE.overflow;
   $('#export-note').textContent = blocked ? 'Export disabled: a BLOCK finding must be fixed first (edit the copy or use the rewrite, then re-score).'
-    : STATE.overflow ? 'Export disabled: the copy does not fit the 1080×1080 canvas and the disclaimer would be cut off. Shorten the body, then re-score.'
+    : STATE.overflow ? 'Export disabled: the copy does not fit the 1080×1080 canvas even at the smallest type size, so the disclaimer would be cut off. Shorten the body, then re-score.'
+    : score.verdict === 'PASS_WITH_WARNINGS' && STATE.fit < 1 ? `Exportable. Warnings shown — a reviewer should accept them. Type scaled to ${Math.round(STATE.fit*100)}% to fit.`
+    : score.verdict === 'PASS' && STATE.fit < 1 ? `Clean. Type scaled to ${Math.round(STATE.fit*100)}% to fit.`
     : score.verdict === 'PASS_WITH_WARNINGS' ? 'Exportable. Warnings shown — a reviewer should accept them.' : score.model_ran ? 'Clean.' : 'Deterministic layer only — model did not run.';
 }
 $('#btn-export').onclick = async () => {
