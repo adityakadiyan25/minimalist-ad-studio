@@ -20,13 +20,14 @@ details{margin:10px 0}summary{cursor:pointer;color:var(--muted);font-size:12px}
 .ad-frame{width:540px;height:540px;overflow:hidden;border:1px solid var(--line);background:#fff}
 .ad{width:1080px;height:1080px;transform:scale(.5);transform-origin:0 0;background:#fff;color:#111;display:grid;grid-template-columns:1fr 1fr;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;position:relative}
 .ad .img{display:flex;align-items:center;justify-content:center;background:#f4f4f2;padding:80px}.ad .img img{max-width:100%;max-height:100%;object-fit:contain}
-.ad .txt{padding:88px 80px 88px 64px;display:flex;flex-direction:column}
+.ad .txt{padding:72px 72px 72px 64px;display:flex;flex-direction:column;min-height:0}
 .ad .wordmark{font-size:30px;letter-spacing:.18em;text-transform:lowercase;font-weight:600}
-.ad .badge{margin-top:48px;font-size:44px;line-height:1;color:#333}.ad .badge b{display:block;font-size:150px;letter-spacing:-.04em;font-weight:700;color:#111;margin-bottom:12px}
-.ad h1{font-size:64px;line-height:1.08;letter-spacing:-.025em;margin:44px 0 0;font-weight:600}
-.ad p{font-size:31px;line-height:1.35;margin:28px 0 0;color:#333}
-.ad .foot{margin-top:auto}.ad .cta{display:inline-block;background:#111;color:#fff;font-size:30px;padding:20px 40px;border-radius:6px;font-weight:600}
-.ad .disc{font-size:21px;color:#666;margin-top:26px;line-height:1.3}
+.ad .badge{margin-top:32px;font-size:40px;line-height:1;color:#333}.ad .badge b{display:block;font-size:120px;letter-spacing:-.04em;font-weight:700;color:#111;margin-bottom:10px}
+.ad h1{font-size:56px;line-height:1.08;letter-spacing:-.025em;margin:32px 0 0;font-weight:600}
+.ad p{font-size:28px;line-height:1.35;margin:22px 0 0;color:#333}
+.ad .foot{margin-top:auto;flex-shrink:0;padding-top:24px}.ad .cta{display:inline-block;background:#111;color:#fff;font-size:30px;padding:20px 40px;border-radius:6px;font-weight:600}
+.ad .disc{font-size:21px;color:#666;margin-top:22px;line-height:1.3}
+.ad-frame.overflow{outline:3px solid var(--block)}
 /* ---- score panel ---- */
 .verdict{padding:12px 14px;border-radius:6px;color:#fff;font-weight:600;font-size:15px;display:flex;justify-content:space-between;align-items:center}
 .verdict.BLOCKED{background:var(--block)}.verdict.PASS_WITH_WARNINGS{background:var(--warn)}.verdict.PASS{background:var(--pass)}.verdict small{font-weight:400;opacity:.9}

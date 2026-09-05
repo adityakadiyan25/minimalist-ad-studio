@@ -56,11 +56,17 @@ function renderAd() {
       <p>${esc(c.body)}</p>
       <div class="foot"><span class="cta">${esc(c.cta || 'Learn more')}</span>${c.disclaimer ? `<div class="disc">${esc(c.disclaimer)}</div>` : ''}</div>
     </div>`;
+  // The canvas is fixed at 1080px. If the text column is taller than that, the footer — and the
+  // disclaimer with it — is cropped. That must never export silently.
+  const txt = $('#ad .txt');
+  STATE.overflow = txt.scrollHeight > txt.clientHeight + 1;
+  $('#ad').parentElement.classList.toggle('overflow', STATE.overflow);
 }
 function gateExport(score) {
   const blocked = score.verdict === 'BLOCKED';
-  $('#btn-export').disabled = blocked;
+  $('#btn-export').disabled = blocked || !!STATE.overflow;
   $('#export-note').textContent = blocked ? 'Export disabled: a BLOCK finding must be fixed first (edit the copy or use the rewrite, then re-score).'
+    : STATE.overflow ? 'Export disabled: the copy does not fit the 1080×1080 canvas and the disclaimer would be cut off. Shorten the body, then re-score.'
     : score.verdict === 'PASS_WITH_WARNINGS' ? 'Exportable. Warnings shown — a reviewer should accept them.' : score.model_ran ? 'Clean.' : 'Deterministic layer only — model did not run.';
 }
 $('#btn-export').onclick = async () => {
