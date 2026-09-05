@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "updated": "2026-09-05",
-  "about": "Every rule the scorer applies. The scorer prompt is generated from this file. Each rule cites the evidence it is derived from (see evidence/). Severity: BLOCK stops export; WARN exports with the flag visible; NOTE is advisory. Only 'policy' rules may BLOCK (decision log D3). 'regex' rules are also enforced deterministically before the model runs (D8).",
+  "about": "Every rule the scorer applies. The scorer prompt is generated from this file. Each rule cites the evidence it is derived from (see evidence/). Severity: BLOCK stops export; WARN exports with the flag visible; NOTE is advisory. Only 'policy' rules may BLOCK (decision log D3). 'regex' rules (Python re syntax, case-insensitive) are also enforced deterministically before the model runs (D8).",
   "severities": {
     "BLOCK": "Legal or reputational exposure serious enough that the ad must not run as written.",
     "WARN": "Off-standard in a way a reviewer would push back on. Can run if a human accepts it.",
@@ -173,7 +173,7 @@
       ],
       "brand_does_instead": "Leads with the active and what it does. Offers, where they appear, are in plain text: 'Buy 2, Get 3rd Free'.",
       "fix": "Lead with ingredient + mechanism. Move the offer to a secondary line in sentence case. Remove emoji and exclamation marks.",
-      "regex": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]|!{2,}|\\b(FREEBIE|HURRY|LIMITED TIME|SALE ENDS|FLASH SALE)\\b"
+      "regex": "[\\U0001F300-\\U0001FAFF☀-➿]|!{2,}|\\b(FREEBIE|HURRY|LIMITED TIME|SALE ENDS|FLASH SALE)\\b"
     },
     {
       "id": "T2",

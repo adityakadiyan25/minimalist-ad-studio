@@ -47,7 +47,8 @@ Running log of design decisions, in the order they were made. Each entry: the de
 **Why:** The brief says "be explicit about where the standard comes from" and "the scorer's judgments are only as good as the rules behind them." A prompt paragraph can't be audited; a rules file with citations can. The regex layer exists because a model *can* miss "cures acne" in a long ad, and the cost of that miss is the whole point of the tool. Belt and braces for the BLOCK tier only.
 **Rejected:** Pure LLM judgement ("does this sound like Minimalist?"). That is exactly what the brief calls "asking a model to have opinions and reporting them back unexamined."
 
-## D9 — Stack: Node + Express, single static page, Anthropic API. Fetching is server-side.
-**Decision:** One `npm install && npm start`. Server fetches `beminimalist.co/products/<handle>.json` (title, price, images, tags) plus the page HTML (claims, study stats, suitability), so browser CORS never applies. Manual paste fallback exists for when the site changes or blocks.
-**Why:** Two-minute setup limit. No build step, no framework. The Shopify JSON endpoint was verified working on 2026-09-05.
-**Known limitation:** Requires an `ANTHROPIC_API_KEY`. That is a setup step and is stated first in the README.
+## D9 — Stack: Python + FastAPI, single static page, Anthropic Python SDK. Fetching is server-side.
+**Decision:** One `pip install -r requirements.txt` and one command to run. Server fetches `beminimalist.co/products/<handle>.json` (title, price, images, tags) plus the page HTML (claims, study stats, suitability), so browser CORS never applies. Manual paste fallback exists for when the site changes or blocks. Front end is plain HTML/JS because the 1080×1080 creative is an HTML/CSS layout regardless of backend.
+**Why:** Two-minute setup limit. No build step, no framework on the front end. The Shopify JSON endpoint was verified working on 2026-09-05.
+**History:** First built in Node/Express without asking. The owner pointed out that no language had been specified and chose Python. Ported the same day; API contract and front end unchanged, golden tests identical. Recorded here because "the agent picked a stack silently" is exactly the kind of unflagged decision the brief says to watch for.
+**Known limitation:** Requires an `ANTHROPIC_API_KEY`. That is a setup step and is stated first in the README. Without it the app runs in a degraded mode (deterministic rules only) and says so in the UI.

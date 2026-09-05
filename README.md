@@ -6,19 +6,19 @@ Internal prototype for [Minimalist](https://beminimalist.co): paste a product UR
 
 ## Run it (under two minutes)
 
-Requires Node 20.6+.
+Requires Python 3.10+.
 
 ```bash
 git clone https://github.com/adityakadiyan25/minimalist-ad-studio.git
 cd minimalist-ad-studio
-npm install
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 cp .env.example .env        # then put your Anthropic API key in .env
-npm start                   # → http://localhost:3000
+.venv/bin/python -m app.server    # → http://localhost:3000
 ```
 
 Without an API key the app still runs: product fetch, layout, export, and the deterministic rule layer all work. Judgement-based rules and copy generation are skipped and the UI says so.
 
-`npm test` runs the golden ad set in `tests/run.js`.
+`.venv/bin/python tests/run.py` runs the golden ad set.
 
 ## What it does
 
@@ -39,13 +39,14 @@ Without an API key the app still runs: product fetch, layout, export, and the de
 ## Layout
 
 ```
-app/          server.js (Express) · lib/{fetchProduct,rules,scorer,generator}.js · public/ (vanilla HTML/JS)
+app/          server.py (FastAPI) · fetch_product.py · rules.py · scorer.py · generator.py · public/ (vanilla HTML/JS)
 rules/        brand-rules.json — the standard; the scorer prompt is rendered from this
 evidence/     product-pages.md · brand-voice.md · regulatory.md · ads/ (real ad screenshots)
 docs/         decision-doc.md · failure-modes.md · decision-log.md · prompts.md (generated)
-tests/        run.js — golden ad set
+tests/        run.py — golden ad set
+scripts/      dump_prompts.py — regenerates docs/prompts.md from the live prompt code
 ```
 
 ## Tooling
 
-Built with Claude Code (Claude Fable 5.1) as the coding agent; the app itself calls Claude Opus 5 via the Anthropic SDK. The full unedited session transcript is included in the submission.
+Python + FastAPI backend, vanilla HTML/JS front end. Built with Claude Code (Claude Fable 5.1) as the coding agent; the app itself calls Claude Opus 5 via the Anthropic Python SDK. The full unedited session transcript is included in the submission.
