@@ -58,3 +58,49 @@ URL: https://beminimalist.co/products/salicylic-acid-2
 5. **Provenance named.** Suppliers cited (Lonza/Switzerland, Merck/Germany) — transparency extends to sourcing.
 6. **Safety is explicit, not fine print.** Age suitability, pregnancy guidance, patch-test note appear on every page.
 7. **Softness exists but stays literal.** "baby-soft" is about texture, not a transformation promise. The voice is clinical, not cold.
+
+---
+
+## Pages 3–5 (added after pattern review, to test the patterns against other categories)
+
+### Page 3: Vitamin C + E + Ferulic 16% Face Serum (₹540, MRP ₹599)
+URL: https://beminimalist.co/products/vitamin-c-e-ferulic-16 · Tags: "Dark spots, Dull Skin, Sun damage, treat"
+- Headline: "Brightens & protects skin"
+- "A skin-brightening daily serum with stable Vitamin C at 15% and antioxidants (Vitamin E & Ferulic Acid) at 1% combined."
+- "Made with stabilized Vitamin C derivative "Ethyl Ascorbic Acid" (EAA) that has 86% pure Vitamin C content. This serum delivers EAA in high concentration of 15%"
+- "Proven antioxidant that visibly brightens dull skin and fades dark spots"
+- Study lines (percent shown as graphic, not captured in text): "subjects agreed significant improvement in skin glow & reduction in dullness" · "subjects agreed skin felt more even looking after 6 weeks" · "subjects agreed reduction in spots after 8 weeks"
+- **"This serum is suitable for all skin types."** (FAQ)
+- "Pregnant or breastfeeding individuals should not use this product without consulting their healthcare provider first."
+- Testimonial quoted on page: "Visibly gives me brighter and more even skin tone and helps to accelerate the fading of scars. -Meenakshi P."
+
+### Page 4: SPF 60 Sunscreen (₹540, MRP ₹599)
+URL: https://beminimalist.co/products/spf-60-silymarin · Tags: "Pregnancy Safe, SPF, Sun damage, Sunscreen, uv filters"
+- Headline: "Broad spectrum SPF 60, PA++++"
+- "Thoroughly tested by an independent lab and confirmed SPF of 60 was obtained" · "Below is the lab report and the data points"
+- "It is Photostable, Pregnancy Safe, Acne Safe sunscreen"
+- "It is reef safe and free of OMC, Benzophenone / Oxybenzone, and Homosalate."
+- "does not pill or leave a nasty white cast"
+- "The primary filters are sourced from BASF, Germany"
+- FAQ: "Is it safe for all skin types?" → "Yes. This is a light-weight sunscreen suitable for all skin types."
+- FAQ: pregnancy → "Yes. This sunscreen uses all modern filters that are termed safe during pregnancy & lactation period."
+
+### Page 5: Retinol 0.6% Face Serum (₹585, MRP ₹649)
+URL: https://beminimalist.co/products/retinol-0-6 · Tags: "Anti-aging, Fine lines, treat"
+- Meta title: "Medium strength Retinol Formula for Fading Fine Lines & Wrinkles - Suitable for All Skin Type"
+- "A powerful anti-aging Retinol serum formulated in a stable, water-free system"
+- "Contains 0.6% pure Retinol in water-free formulation. It is a medium strength formula, suitable for fading fine lines & wrinkles"
+- **"which in turn helps reverse the signs of aging"** (Coenzyme Q10 description)
+- "resulting in reduction of wrinkle depth"
+- "Retinol from BASF, Germany and Coenzyme Q10 from Selco, Germany"
+- Usage guidance is detailed: "Start with every alternate day and after 2 weeks of usage, use it everyday. If you are new to Retinol, we recommend to start with 0.3% formula first"
+- "Except for pregnant or breastfeeding women and those under 18 years of age, anyone can begin using retinol in their mid-'20s."
+- Purging disclosure: "In the first 2-3 weeks of use, your cell turnover increases, causing your pores to purge."
+
+## Revised patterns after pages 3–5
+
+Patterns 1–7 above hold across categories. Three additions, two of which cut *against* the brand:
+
+8. **Numbers, but not always substantiated in-text.** Vitamin C page shows study percentages as graphics with "subjects agreed..." captions; the n and the % are not in copy. An ad copying "subjects agreed skin felt more even" without the number is weaker than the brand's usual standard.
+9. **The brand's own pages contain claims the scorer must flag.** "helps reverse the signs of aging" (Retinol) is drug-adjacent and sits next to Schedule J's "premature ageing". "Suitable for all skin types" (Vit C, SPF, Retinol meta title) is an absolute the ASCI code treats as needing substantiation, and it contradicts the brand's own per-product age/pregnancy caveats. **Consequence: "it appears on the product page" cannot be the scorer's pass condition.** See decision log D6.
+10. **"Free of X" appears, but as fact not fear.** SPF page: "free of OMC, Benzophenone / Oxybenzone, and Homosalate" — a specific, named list. Compare the founder's stated enemy, "chemical-free"/"100% natural". The line the brand draws: naming what is absent is fine; implying the category is dangerous is not.
