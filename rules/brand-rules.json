@@ -114,7 +114,8 @@
       ],
       "brand_does_instead": "'Recommended for Combination/Oily Skin' · 'Suitable for: 16+ years of age' · 'Pregnancy/Lactation: Safe' (as a labelled field, product by product).",
       "fix": "Name the skin type or concern it is for. If the page states an age or pregnancy limit, carry it.",
-      "regex": "\\b(for|suits?|suitable for|safe for) (all|every|everyone|any) ?(skin ?types?|ages?|one)?\\b"
+      "regex": "\\b(for|suits?|suitable for|safe for) (all|every|everyone|any) ?(skin ?types?|ages?|one)?\\b",
+      "note_for_model": "'Pregnancy safe', 'Pregnancy/Lactation: Safe', 'safe during pregnancy' with no 'consult your doctor' qualifier counts, even when copied from the product page's labelled field — flag it with on_source_page=true. Observed miss 2026-09-05: let 'Pregnancy/lactation: safe' through on a Niacinamide ad because the page said it."
     },
     {
       "id": "P8",
@@ -260,7 +261,8 @@
       ],
       "brand_does_instead": "'10% Niacinamide', '2% salicylic acid', 'Retinol 0.6%'.",
       "fix": "Use the product's exact name form: '<Active> <N%> <Format>'.",
-      "regex": null
+      "regex": null,
+      "note_for_model": "Applies to the HERO active only — the ingredient in the product's name. Supporting ingredients (Zinc, Coenzyme Q10, Matmarine, EGCG, Vitamin E) do not need a percentage. Observed false positive 2026-09-05: flagged 'Coenzyme Q10' in a Retinol 0.6% ad."
     },
     {
       "id": "L2",

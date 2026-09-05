@@ -52,3 +52,15 @@ Running log of design decisions, in the order they were made. Each entry: the de
 **Why:** Two-minute setup limit. No build step, no framework on the front end. The Shopify JSON endpoint was verified working on 2026-09-05.
 **History:** First built in Node/Express without asking. The owner pointed out that no language had been specified and chose Python. Ported the same day; API contract and front end unchanged, golden tests identical. Recorded here because "the agent picked a stack silently" is exactly the kind of unflagged decision the brief says to watch for.
 **Known limitation:** Requires an `ANTHROPIC_API_KEY`. That is a setup step and is stated first in the README. Without it the app runs in a degraded mode (deterministic rules only) and says so in the UI.
+
+## D10 — What the first live runs got wrong (2026-09-05, model layer on)
+Recorded because the brief grades iteration. All 13 golden cases passed on the first live run; the problems were in what the tests did not cover.
+
+1. **Fetcher dropped a pregnancy warning.** Retinol page FAQ: "Except for pregnant or breastfeeding women and those under 18 years of age…" sat inside a 400-character paragraph. My fetcher capped lines at 320 characters, so the line vanished, the generator wrote a retinoid ad with no pregnancy line, and the scorer said "the source page does not state a pregnancy restriction." A data-plumbing limit became a missing safety disclaimer on the one product category where it matters most. **Fix:** long paragraphs are split into sentences before filtering. Retinol ad now reads "Not for pregnant or breastfeeding women."
+2. **Scorer deferred to the page on "Pregnancy/lactation: safe."** Rule P7 says unqualified pregnancy-safety claims warn. The niacinamide ad carried the page's labelled field verbatim and the scorer let it through — exactly the "page says it so it's fine" reflex D6 is meant to prevent. **Fix:** P7 now carries an explicit note that page-sourced pregnancy-safe fields still warn, with on_source_page=true.
+3. **L1 over-fired on a supporting ingredient.** Flagged "Coenzyme Q10" for lacking a percentage in a Retinol 0.6% ad. The rule is about the hero active. **Fix:** note added to L1 naming supporting ingredients.
+4. **Rewrite length.** The salicylic rewrite was 60+ words, unusable in a 1080×1080. **Fix:** rewrite constrained to ≤8-word headline, ≤35-word body, and told not to introduce facts.
+5. **A false alarm of my own.** I suspected the rewrite had invented "for 2 weeks." Checked the page: the stat "skin felt less oily throughout the day after using this serum for 2 weeks" is there. The rewrite was faithful. Noting it because the reviewer's reflex to distrust the model needs the same checking as the model does.
+6. **The loop worked once.** Generator wrote "clears sebum from pores"; scorer flagged L2 and offered "helps reduce sebum and blackheads." That is the generator→scorer connection doing its job on real output.
+
+**Open:** rewrites are not scored. The UI only lets a rewrite reach export through "Use rewrite & re-score," but an API consumer could copy the rewrite text straight out. Listed in failure modes.

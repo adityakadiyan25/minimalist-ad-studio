@@ -14,6 +14,11 @@ let RULES = null;
   const p = await api('/api/prompts'); $('#prompt-scorer').textContent = p.scorer_any; $('#prompt-generator').textContent = p.generator;
 })();
 
+// ---- deep links: ?demo=<handle> auto-generates; ?demo_score=1 loads and scores the bad example
+const Q = new URLSearchParams(location.search);
+if (Q.get('demo')) { $('#url').value = 'https://beminimalist.co/products/' + Q.get('demo'); setTimeout(() => $('#btn-generate').click(), 50); }
+if (Q.get('demo_score')) { document.querySelector('[data-tab="score"]').click(); setTimeout(() => { $('#btn-example').click(); $('#btn-score').click(); }, 50); }
+
 // ---- generate
 let STATE = { product: null, copy: null, score: null };
 $('#btn-paste-toggle').onclick = () => $('#paste-box').classList.toggle('hidden');

@@ -21,6 +21,7 @@ NOISE = [re.compile(p, re.I) for p in [
     r"^[\"“']",  # quoted customer reviews — never a source fact
     r"praised for|appreciated for|customers? (appreciated|highlighted|noted)|opinions vary|mixed feelings|some users",
     r"^\{", r"window\.", r"function\s*\(",
+    r"\| Minimalist$",  # the page <title>, an SEO string rather than page copy
 ]]
 CLAIM_KW = re.compile(r"clinic|proven|reduc|improv|helps?|fight|brighten|glow|protect|spf|pa\+|repair|visibl|weeks|days|subjects|source|free|non-comedogenic|derma|acne|pores?|oil|barrier|hydrat|wrinkle|fine lines|dark spots|even|tone|exfoliat|sebum|blackhead", re.I)
 SAFETY = re.compile(r"patch test|pregnan|breastfeed|lactat|years of age|\b1[68]\+|consult (a|your) (doctor|dermatologist|healthcare)|non-comedogenic|fragrance free|essential oil free|start (with|slow)|alternate day|purg", re.I)
@@ -41,8 +42,13 @@ def html_to_lines(raw: str) -> list[str]:
     seen: set[str] = set(); out: list[str] = []
     for l in t.split("\n"):
         l = re.sub(r"\s+", " ", l).strip()
-        if len(l) < 3 or l in seen: continue
-        seen.add(l); out.append(l)
+        if len(l) < 3: continue
+        # Long paragraphs (FAQ answers) are split into sentences so a safety line buried in one is not lost to the length cap.
+        pieces = re.split(r"(?<=[.!?])\s+(?=[A-Z])", l) if len(l) > 320 else [l]
+        for piece in pieces:
+            piece = piece.strip()
+            if len(piece) < 3 or piece in seen: continue
+            seen.add(piece); out.append(piece)
     return out
 
 

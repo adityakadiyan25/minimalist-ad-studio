@@ -36,7 +36,7 @@ BLOCK = must not run as written. WARN = a reviewer would push back; can run if a
 Some rules also run as regex before you see the ad. Those hits are listed in the user message. Keep every one of them (you may improve the explanation and fix). If you believe a pre-pass hit is a false positive, keep it and say why in its explanation — a human decides.
 
 ## Rewrite
-If verdict would be BLOCKED or PASS_WITH_WARNINGS, provide a full rewrite of headline and body that clears every finding while keeping every fact that was legitimately sourced. The rewrite must itself satisfy the rulebook. Use the brand's patterns: active + %, mechanism, hedged verb, timeframe if available.
+If verdict would be BLOCKED or PASS_WITH_WARNINGS, provide a rewrite of headline and body that clears every finding while keeping every fact that was legitimately sourced. Headline ≤ 8 words, body ≤ 35 words — it has to fit a 1080×1080 ad. The rewrite must itself satisfy the rulebook and must not introduce any number, timeframe, ingredient or claim that is not already in the ad or (in generator mode) in the source facts. The rewrite is a suggestion; it is not scored until the marketer re-submits it.
 
 ## Rulebook (version 0.1.0, 2026-09-05)
 ### P1 — Disease treatment / cure claim  [POLICY · BLOCK]
@@ -81,6 +81,7 @@ Catches: 'for all skin types', 'suitable for everyone', 'safe for all ages', 'sa
 Why: ASCI 1.1 (must be capable of substantiation). It also contradicts the brand's own practice of stating age and pregnancy limits per product ('Suitable for: 18+', 'pregnant, and breastfeeding, women should consult their doctor'). The brand's own pages say 'suitable for all skin types' on some products — this rule flags those too (D6).
 What Minimalist does instead: 'Recommended for Combination/Oily Skin' · 'Suitable for: 16+ years of age' · 'Pregnancy/Lactation: Safe' (as a labelled field, product by product).
 Fix pattern: Name the skin type or concern it is for. If the page states an age or pregnancy limit, carry it.
+Note: 'Pregnancy safe', 'Pregnancy/Lactation: Safe', 'safe during pregnancy' with no 'consult your doctor' qualifier counts, even when copied from the product page's labelled field — flag it with on_source_page=true. Observed miss 2026-09-05: let 'Pregnancy/lactation: safe' through on a Niacinamide ad because the page said it.
 
 ### P8 — Superlative or comparative without basis  [POLICY · WARN]
 Catches: 'best', '#1', 'India's most trusted', 'better than', 'only serum that', 'No.1 dermatologist choice'.
@@ -141,6 +142,7 @@ Catches: 'Niacinamide serum', 'our salicylic acid formula', 'with Vitamin C' —
 Why: Brand pillar #1: 'Full disclosure of ingredients used & their concentration'. The % is literally in every product name ('Niacinamide 10% Face Serum'). Dropping it drops the brand's core differentiator.
 What Minimalist does instead: '10% Niacinamide', '2% salicylic acid', 'Retinol 0.6%'.
 Fix pattern: Use the product's exact name form: '<Active> <N%> <Format>'.
+Note: Applies to the HERO active only — the ingredient in the product's name. Supporting ingredients (Zinc, Coenzyme Q10, Matmarine, EGCG, Vitamin E) do not need a percentage. Observed false positive 2026-09-05: flagged 'Coenzyme Q10' in a Retinol 0.6% ad.
 
 ### L2 — Unhedged outcome verb on a cosmetic claim  [LANGUAGE · WARN]
 Catches: 'removes', 'erases', 'vanishes', 'kills', 'destroys', 'wipes out', 'banishes' applied to spots, pores, oil, blackheads, dullness, lines. (Cure/treat + disease is P1; this is the softer, cosmetic-outcome version.)
@@ -253,6 +255,7 @@ Catches: 'for all skin types', 'suitable for everyone', 'safe for all ages', 'sa
 Why: ASCI 1.1 (must be capable of substantiation). It also contradicts the brand's own practice of stating age and pregnancy limits per product ('Suitable for: 18+', 'pregnant, and breastfeeding, women should consult their doctor'). The brand's own pages say 'suitable for all skin types' on some products — this rule flags those too (D6).
 What Minimalist does instead: 'Recommended for Combination/Oily Skin' · 'Suitable for: 16+ years of age' · 'Pregnancy/Lactation: Safe' (as a labelled field, product by product).
 Fix pattern: Name the skin type or concern it is for. If the page states an age or pregnancy limit, carry it.
+Note: 'Pregnancy safe', 'Pregnancy/Lactation: Safe', 'safe during pregnancy' with no 'consult your doctor' qualifier counts, even when copied from the product page's labelled field — flag it with on_source_page=true. Observed miss 2026-09-05: let 'Pregnancy/lactation: safe' through on a Niacinamide ad because the page said it.
 
 ### P8 — Superlative or comparative without basis  [POLICY · WARN]
 Catches: 'best', '#1', 'India's most trusted', 'better than', 'only serum that', 'No.1 dermatologist choice'.
@@ -313,6 +316,7 @@ Catches: 'Niacinamide serum', 'our salicylic acid formula', 'with Vitamin C' —
 Why: Brand pillar #1: 'Full disclosure of ingredients used & their concentration'. The % is literally in every product name ('Niacinamide 10% Face Serum'). Dropping it drops the brand's core differentiator.
 What Minimalist does instead: '10% Niacinamide', '2% salicylic acid', 'Retinol 0.6%'.
 Fix pattern: Use the product's exact name form: '<Active> <N%> <Format>'.
+Note: Applies to the HERO active only — the ingredient in the product's name. Supporting ingredients (Zinc, Coenzyme Q10, Matmarine, EGCG, Vitamin E) do not need a percentage. Observed false positive 2026-09-05: flagged 'Coenzyme Q10' in a Retinol 0.6% ad.
 
 ### L2 — Unhedged outcome verb on a cosmetic claim  [LANGUAGE · WARN]
 Catches: 'removes', 'erases', 'vanishes', 'kills', 'destroys', 'wipes out', 'banishes' applied to spots, pores, oil, blackheads, dullness, lines. (Cure/treat + disease is P1; this is the softer, cosmetic-outcome version.)
