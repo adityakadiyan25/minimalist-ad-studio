@@ -64,3 +64,16 @@ Recorded because the brief grades iteration. All 13 golden cases passed on the f
 6. **The loop worked once.** Generator wrote "clears sebum from pores"; scorer flagged L2 and offered "helps reduce sebum and blackheads." That is the generator→scorer connection doing its job on real output.
 
 **Open:** rewrites are not scored. The UI only lets a rewrite reach export through "Use rewrite & re-score," but an API consumer could copy the rewrite text straight out. Listed in failure modes.
+
+## D11 — What running it myself found (2026-09-05 evening to 2026-09-06)
+D10 was the agent on its own runs. This is me on a fresh clone with my own URLs and my own bad ads.
+
+1. **Tests passed without the model.** Placeholder key, "Model layer: ON", 11/13 green. The scorer had silently degraded to regex; the harness only checked a key existed. **Fix:** harness fails with the model's error if a key is set and the model did not run. `209dcca`.
+2. **Disclaimer rendered off-canvas.** First Retinol run: pregnancy line correct in the copy, cropped below the 1080 frame. D7 assumed the disclaimer would always fit and never checked. **Fix:** headline/body/badge scale to a 70% floor; disclaimer and CTA never shrink; if it still overflows, export is gated like a BLOCK. `4697a68`, `5ec4bc6`.
+3. **P7 page-deference confirmed live.** Added "Safe during pregnancy and lactation." to the Niacinamide disclaimer: WARN P7, tagged *also on product page*, fix offered, export gated. D6 working on real output.
+4. **Generate is a draw, not a lookup.** Same URL twice gave different (both passing) copy. Not a defect; recording so nobody expects repeatability. The rulebook is the stable artefact.
+5. **Two omission risks with no rule.** Model noted the Retinol page's start-at-0.3% guidance and purging warning were absent from the ad, said so under *Not checked*, invented nothing. Correct behaviour; v0.1 has no omission rule for tolerability or strength-laddering. Deferred to a rule-writing decision.
+6. **Six adversarial ads** — cure claim without the cure word, Hinglish absolutes, a negated banned phrase, a BLOCK claim hidden in the disclaimer field, a fabricated-but-well-formed statistic, a named-competitor comparison. All landed where the rulebook says they should. The negated phrase is the regex false positive D3 accepts; the fabricated statistic passes by design and is failure mode 1 in one sentence. All six added to the golden set.
+7. **README says 3.10+; I ran 3.9.** `str | None` crashed the server on import; tests had passed because the scorer uses `Optional`. The README was right.
+
+**Open:** whether "the page said it" exempts an unsubstantiated stat ("clinically proven … in 2 weeks") from a P4 note — the D6 question one level down. And the rewrite folds the disclaimer into the body and returns only headline and body; what that does to the Disclaimer field on "Use rewrite" is unchecked.
