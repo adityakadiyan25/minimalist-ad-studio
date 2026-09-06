@@ -2,7 +2,7 @@
 
 Internal prototype for [Minimalist](https://beminimalist.co): paste a product URL, get a 1080×1080 ad creative built only from that page's facts, self-scored against a brand + compliance rulebook. Paste any other ad and score it against the same rulebook.
 
-**PM assignment.** Read in this order: [docs/decision-doc.md](docs/decision-doc.md) (one page) → [docs/failure-modes.md](docs/failure-modes.md) → [rules/brand-rules.json](rules/brand-rules.json) (the standard) → [docs/decision-log.md](docs/decision-log.md) (the reasoning trail) → [evidence/](evidence/) (what the rules are derived from) → [docs/prompts.md](docs/prompts.md) (the prompts the app runs).
+**PM assignment.** Read in this order: [docs/decision-doc.md](docs/decision-doc.md) (one page) → [docs/failure-modes.md](docs/failure-modes.md) → [rules/brand-rules.json](rules/brand-rules.json) (the standard) → [docs/decision-log.md](docs/decision-log.md) (the reasoning trail) → [evidence/](evidence/) (what the rules are derived from) → [docs/prompts.md](docs/prompts.md) (the prompts the app runs) → [transcript/](transcript/) (the agent sessions).
 
 ## Run it (under two minutes)
 
@@ -44,9 +44,19 @@ rules/        brand-rules.json — the standard; the scorer prompt is rendered f
 evidence/     product-pages.md · brand-voice.md · regulatory.md · ads/ (real ad screenshots)
 docs/         decision-doc.md · failure-modes.md · decision-log.md · prompts.md (generated)
 tests/        run.py — golden ad set
-scripts/      dump_prompts.py — regenerates docs/prompts.md from the live prompt code
+scripts/      dump_prompts.py — regenerates docs/prompts.md from the live prompt code · transcript_to_md.py — renders a Claude Code .jsonl session
+transcript/   01-claude-code-build-session.md (the build, Claude Code) · 02-claude-ai-review-session.md (review and iteration, claude.ai)
 ```
 
 ## Tooling
 
-Python + FastAPI backend, vanilla HTML/JS front end. Built with Claude Code (Claude Fable 5.1) as the coding agent; the app itself calls Claude Opus 5 via the Anthropic Python SDK. The full unedited session transcript is included in the submission.
+Python + FastAPI backend, vanilla HTML/JS front end. Built with Claude Code (Claude Fable 5.1) as the coding agent; the app itself calls Claude Opus 5 via the Anthropic Python SDK.
+
+## Build record
+
+The agent sessions are in [`transcript/`](transcript/), and the commit history is intact and unsquashed.
+
+- [`transcript/01-claude-code-build-session.md`](transcript/01-claude-code-build-session.md) — the Claude Code session that built this repo, 5–6 Sep. Rendered from the raw `.jsonl` by `scripts/transcript_to_md.py`; nothing dropped or reworded, two pasted credentials redacted (the header says which).
+- [`transcript/02-claude-ai-review-session.md`](transcript/02-claude-ai-review-session.md) — the claude.ai review session, 5–6 Sep, in which the fresh-clone testing, the layout fix, D11–D13 and the rulebook cut were worked out. The claude.ai data export was not available in time, so this is a reconstruction by the assistant from the thread, with tool calls summarised; the header says exactly how.
+
+The prompts the app runs are in [`docs/prompts.md`](docs/prompts.md), generated from the live code.
