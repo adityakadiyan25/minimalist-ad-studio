@@ -44,6 +44,8 @@ CASES = [
 ]
 
 model_on = has_key()
+FILTER = [a.lower() for a in sys.argv[1:]]  # optional: substrings of case names to run, e.g. `tests/run.py hinglish negated`
+if FILTER: CASES = [c for c in CASES if any(f in c["name"].lower() for f in FILTER)]
 print(f"Model layer: {'ON' if model_on else 'OFF (regex layer only — needs_model cases are skipped)'}\n")
 passed = failed = skipped = 0
 for c in CASES:
