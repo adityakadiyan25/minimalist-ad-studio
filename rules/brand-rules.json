@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "updated": "2026-09-06",
   "about": "Every rule the scorer applies. The scorer prompt is generated from this file. Each rule cites the evidence it is derived from (see evidence/). Severity: BLOCK stops export; WARN exports with the flag visible; NOTE is advisory. Only 'policy' rules may BLOCK (decision log D3). 'regex' rules (Python re syntax, case-insensitive) are also enforced deterministically before the model runs (D8).",
   "severities": {
@@ -251,6 +251,23 @@
       "regex": "\\b(remov(e|es|ing)|eras(e|es)|vanish(es)?|kill(s)?|destroy(s)?|wipe(s)? out|banish(es)?|zap(s)?)\\b[^.!?\\n]{0,30}\\b(spots?|pores?|oil|blackheads?|whiteheads?|dullness|lines?|wrinkles?|pigmentation|tan)\\b"
     },
     {
+      "id": "L3",
+      "dimension": "language",
+      "severity": "WARN",
+      "mode": "generator",
+      "name": "Page-stated qualifier omitted (generator mode only)",
+      "catches": "The source page states a timeframe ('in 4 weeks'), a usage ramp ('start with 0.3%', 'every alternate night', 'PM only'), or a tolerability note ('purging in the first 2–3 weeks', 'mild tingling') for this product, and the ad states the related benefit without it.",
+      "why": "Brand pillar: 'Hide Nothing.' The pages carry the caveat next to the claim; an ad that keeps the claim and drops the caveat is more confident than the brand is. Found on the first Retinol run (decision log D11): the model noticed the page's 0.3% ramp and purging note were missing and had no rule to cite. Age and pregnancy limits are P10, not this rule.",
+      "evidence": [
+        "evidence/product-pages.md#patterns-observed--rule-candidates",
+        "docs/decision-log.md#d11"
+      ],
+      "brand_does_instead": "'In a 4-week study…', 'Use PM, starting every alternate day', 'Expect some purging in the first 2–3 weeks.'",
+      "fix": "Add the qualifier the page states, in the page's words. If space is the problem, shorten the benefit, not the caveat.",
+      "regex": null,
+      "note_for_model": "Fires only when the fetched page actually states the qualifier. Do not infer one from general knowledge. Does not fire in score-any mode (no page). Does not fire for age/pregnancy limits — that is P10."
+    },
+    {
       "id": "L4",
       "dimension": "language",
       "severity": "NOTE",
@@ -258,16 +275,18 @@
       "catches": "'glow', 'radiance', 'nourish', 'rejuvenate', 'detox', 'revitalise', 'youthful', 'luminous' as the whole claim; transformation words used the same way ('transform', 'new skin', 'reborn', 'glow-up', 'skin makeover').",
       "why": "Pattern 2, mechanism over magic. The brand uses 'glow' only when a study caption uses it ('improvement in skin glow & reduction in dullness'), and pairs it with the measurable term.",
       "evidence": [
-        "evidence/product-pages.md"
+        "evidence/product-pages.md",
+        "evidence/ads/ad-batch4-01.png"
       ],
       "brand_does_instead": "'brightens dull skin and fades dark spots', 'scavenge free radicals to reduce redness'.",
       "fix": "Name what happens: 'brightens dull skin', 'reduces dark spots', 'supports the skin barrier'.",
-      "regex": null
+      "regex": null,
+      "note_for_model": "Does not fire when the same sentence or line names a specific active with its concentration, or a concrete change ('evens skin tone', 'reduces dark spots'). The brand's own active ads use 'glow' this way (evidence/ads/ad-batch4-01.png: 'Boosts glow, evens skin tone, and reduces dark spots'). Fires when the vague noun is the whole claim ('Reveal Your Natural Glow')."
     },
     {
       "id": "L5",
       "dimension": "language",
-      "severity": "NOTE",
+      "severity": "WARN",
       "name": "'Natural' / 'herbal' / 'organic' as a virtue",
       "catches": "'natural', 'all-natural', 'herbal', 'ayurvedic', 'organic', 'plant-based' presented as the reason the product is good or safe.",
       "why": "Founder: the brand was built to 'debunk the myth of chemical-free skincare' and the misconception that '100% natural means safe and effective'. (The SPF page uses 'organic' in its chemistry sense — 'organic, oil based ... filter' — which is fine.) 'Chemical-free' itself is P9.",
@@ -276,7 +295,8 @@
       ],
       "brand_does_instead": "Names the active, its concentration, its supplier: 'Niacinamide comes from Lonza, Switzerland'.",
       "fix": "Replace with the specific active and concentration.",
-      "regex": null
+      "regex": null,
+      "note_for_model": "'Organic' in its chemistry sense ('organic UV filter') does not fire. Fires when natural/herbal/organic/plant-based is offered as the reason the product is good or safe."
     },
     {
       "id": "L6",
@@ -290,7 +310,8 @@
       ],
       "brand_does_instead": "'Niacinamide 10% Face Serum', 'Salicylic Acid 2% Face Serum'.",
       "fix": "Use the exact product title.",
-      "regex": null
+      "regex": null,
+      "note_for_model": "Fires on the first mention of the product. Does not fire on a number-plus-active lockup ('10% Niacinamide') used as a visual badge, nor on shortened repeats after the full title has appeared once in the ad."
     },
     {
       "id": "G1",
