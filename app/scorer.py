@@ -54,7 +54,7 @@ def score_ad(ad: dict, product: dict | None = None, mode: str = "any") -> dict:
 
     def degraded(reason: str) -> dict:
         findings = merge_findings([], pre)
-        return {**base, "model_ran": False, "model_error": f"{reason} Only the deterministic layer ran; judgement-based rules (P3, P4, P10, T4–T6, L1, L3–L6, G1) were NOT checked.",
+        return {**base, "model_ran": False, "model_error": f"{reason} Only the deterministic layer ran; judgement-based rules (P3, P4, P10, T4, L1, L4–L6, G1) were NOT checked.",
                 "findings": findings, "verdict": verdict_from(findings), "dimension_summary": None, "rewrite": None,
                 "not_checked": ["All judgement-based rules (model layer did not run)", "Visual content"]}
 

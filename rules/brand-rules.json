@@ -1,6 +1,6 @@
 {
-  "version": "0.1.0",
-  "updated": "2026-09-05",
+  "version": "0.2.0",
+  "updated": "2026-09-06",
   "about": "Every rule the scorer applies. The scorer prompt is generated from this file. Each rule cites the evidence it is derived from (see evidence/). Severity: BLOCK stops export; WARN exports with the flag visible; NOTE is advisory. Only 'policy' rules may BLOCK (decision log D3). 'regex' rules (Python re syntax, case-insensitive) are also enforced deterministically before the model runs (D8).",
   "severities": {
     "BLOCK": "Legal or reputational exposure serious enough that the ad must not run as written.",
@@ -181,14 +181,14 @@
       "dimension": "tone",
       "severity": "WARN",
       "name": "Hype / influencer register",
-      "catches": "'shocking', 'obsessed', 'game-changer', 'holy grail', 'magic', 'miracle', 'insane', 'wow', 'glass skin', 'must-have', 'viral', first-person gush.",
+      "catches": "'shocking', 'obsessed', 'game-changer', 'holy grail', 'magic', 'miracle', 'insane', 'wow', 'glass skin', 'must-have', 'viral', first-person gush; celebrity or influencer named as the reason to buy ('as seen on', \"X's favourite\", 'celebrity-approved', 'loved by influencers').",
       "why": "Founder: 'reinforcing our commitment to truth over marketing gimmicks'; 'rather than taking the influencer partnership route'. The brand's paid media does include influencer-style posts, so this is WARN.",
       "evidence": [
         "evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"
       ],
       "brand_does_instead": "Measured outcome verbs: 'reduces', 'helps regulate', 'improves the barrier'.",
       "fix": "Replace the hype word with the specific observable outcome from the product page.",
-      "regex": "\\b(shocking|obsessed|game[- ]changer|holy grail|magic(al)?|miracle|insane|wow|glass skin|must[- ]have|viral|life[- ]changing)\\b"
+      "regex": "\\b(shocking|obsessed|game[- ]changer|holy grail|magic(al)?|miracle|insane|wow|glass skin|must[- ]have|viral|life[- ]changing|as seen on|celebrity[- ]approved|loved by influencers)\\b"
     },
     {
       "id": "T3",
@@ -218,34 +218,6 @@
       ],
       "brand_does_instead": "'Pure 10% Niacinamide ... reduces the sebum level of the skin, improves the barrier'.",
       "fix": "Add one line: what the active is and what it does.",
-      "regex": null
-    },
-    {
-      "id": "T5",
-      "dimension": "tone",
-      "severity": "NOTE",
-      "name": "Celebrity or influencer as authority",
-      "catches": "'as seen on', 'X's favourite', 'celebrity-approved', 'loved by influencers', named personalities as the reason to buy.",
-      "why": "Founder: 'We collaborate with dermatologists ... rather than taking the influencer partnership route'. Authority in this brand is data and dermatologists.",
-      "evidence": [
-        "evidence/brand-voice.md#founder-statements--mohit-yadav-co-founder"
-      ],
-      "brand_does_instead": "'evaluated for safety through patch testing under the supervision of a Dermatologist'; supplier provenance.",
-      "fix": "Replace with the study result or the dermatologist patch-test statement.",
-      "regex": null
-    },
-    {
-      "id": "T6",
-      "dimension": "tone",
-      "severity": "NOTE",
-      "name": "Transformation narrative",
-      "catches": "'transform', 'new skin', 'reborn', 'glow-up', 'skin makeover', before/after framing in copy.",
-      "why": "The brand keeps softness literal: 'baby-soft' is about texture, not a transformation promise (pattern 7). Transformation language also drifts toward P2/P6 territory.",
-      "evidence": [
-        "evidence/product-pages.md#patterns-observed--rule-candidates"
-      ],
-      "brand_does_instead": "Observable, specific descriptors: 'skin looks clear', 'skin felt less oily throughout the day'.",
-      "fix": "Describe the observable change and its timeframe.",
       "regex": null
     },
     {
@@ -279,25 +251,11 @@
       "regex": "\\b(remov(e|es|ing)|eras(e|es)|vanish(es)?|kill(s)?|destroy(s)?|wipe(s)? out|banish(es)?|zap(s)?)\\b[^.!?\\n]{0,30}\\b(spots?|pores?|oil|blackheads?|whiteheads?|dullness|lines?|wrinkles?|pigmentation|tan)\\b"
     },
     {
-      "id": "L3",
-      "dimension": "language",
-      "severity": "NOTE",
-      "name": "Result claim without timeframe",
-      "catches": "A benefit is stated ('reduces blackheads', 'evens skin tone') with no 'in N weeks' / 'after N days', when the product page gives one.",
-      "why": "Pattern 1: every strong claim on the brand's pages carries a timeframe or population. Timeframe is also what keeps a claim on the substantiable side of ASCI 1.1.",
-      "evidence": [
-        "evidence/product-pages.md#patterns-observed--rule-candidates"
-      ],
-      "brand_does_instead": "'improve skin complexion in 2 weeks', 'reduce number of blackheads by 50% after 28 days', 'visible skin clarity in 4 weeks'.",
-      "fix": "Add the timeframe the product page states. If none exists, leave the claim hedged and unquantified.",
-      "regex": null
-    },
-    {
       "id": "L4",
       "dimension": "language",
       "severity": "NOTE",
       "name": "Vague benefit noun with no mechanism",
-      "catches": "'glow', 'radiance', 'nourish', 'rejuvenate', 'detox', 'revitalise', 'youthful', 'luminous' as the whole claim.",
+      "catches": "'glow', 'radiance', 'nourish', 'rejuvenate', 'detox', 'revitalise', 'youthful', 'luminous' as the whole claim; transformation words used the same way ('transform', 'new skin', 'reborn', 'glow-up', 'skin makeover').",
       "why": "Pattern 2, mechanism over magic. The brand uses 'glow' only when a study caption uses it ('improvement in skin glow & reduction in dullness'), and pairs it with the measurable term.",
       "evidence": [
         "evidence/product-pages.md"

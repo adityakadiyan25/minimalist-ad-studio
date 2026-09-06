@@ -77,3 +77,9 @@ D10 was the agent on its own runs. This is me on a fresh clone with my own URLs 
 7. **README says 3.10+; I ran 3.9.** `str | None` crashed the server on import; tests had passed because the scorer uses `Optional`. The README was right.
 
 **Open:** whether "the page said it" exempts an unsubstantiated stat ("clinically proven … in 2 weeks") from a P4 note — the D6 question one level down. And the rewrite folds the disclaimer into the body and returns only headline and body; what that does to the Disclaimer field on "Use rewrite" is unchecked.
+
+## D12 — Cut the rulebook from 23 to 20. Rules v0.2.0.
+**Decision:** Removed T5 (celebrity/influencer as authority), T6 (transformation narrative), L3 (result claim without timeframe). T5's phrases fold into T2; T6's fold into L4. Nothing the scorer caught before goes uncaught; three rule ids go away.
+**Why:** Ten of 23 rules were NOTEs, which never change a verdict. Going through them one by one: T5 only ever fires where T2 or P3 already fires — same failure, different speaker. T6's words are each caught by P2, P5/P6 or L4. L3 as written ("the page had a timeframe and you dropped it") was too narrow to defend; the real gap it pointed at — omitting a page-stated qualifier — is an omission rule the file does not yet have (D11 item 5) and deserves to be written properly, not kept as a weak note.
+**Kept on purpose:** L4, after checking the brand's own active ads (evidence/ads/): "glow" is Minimalist vocabulary when it sits beside a concrete change, and the rule only fires when the vague noun is the whole claim. L5 stays: the founder's "100% natural means safe" correction is the brand's thesis. L6 stays: the naming convention is exact and cheap to check.
+**Rejected:** Keeping all 23 for coverage. A rule I would not fight for in review is the model's opinion, not my standard.
