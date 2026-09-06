@@ -79,10 +79,13 @@ function gateExport(score) {
     : score.verdict === 'PASS_WITH_WARNINGS' ? 'Exportable. Warnings shown — a reviewer should accept them.' : score.model_ran ? 'Clean.' : 'Deterministic layer only — model did not run.';
 }
 $('#btn-export').onclick = async () => {
+  if (typeof html2canvas === 'undefined') { $('#export-note').textContent = 'Export needs html2canvas, which loads from cdnjs.cloudflare.com and did not load. Check the network and reload the page.'; return; }
   const node = $('#ad'); const prev = node.style.transform; node.style.transform = 'none';
-  const canvas = await html2canvas(node, { width: 1080, height: 1080, scale: 1, useCORS: true, backgroundColor: '#fff' });
-  node.style.transform = prev;
-  const a = document.createElement('a'); a.download = `${STATE.product.handle || 'ad'}-1080x1080.png`; a.href = canvas.toDataURL('image/png'); a.click();
+  try {
+    const canvas = await html2canvas(node, { width: 1080, height: 1080, scale: 1, useCORS: true, backgroundColor: '#fff' });
+    const a = document.createElement('a'); a.download = `${STATE.product.handle || 'ad'}-1080x1080.png`; a.href = canvas.toDataURL('image/png'); a.click();
+  } catch (e) { $('#export-note').textContent = 'Export failed: ' + e.message; }
+  finally { node.style.transform = prev; }
 };
 $('#btn-copy-json').onclick = () => navigator.clipboard.writeText(JSON.stringify({ product: STATE.product.title, source_url: STATE.product.source_url, copy: STATE.copy, verdict: STATE.score.verdict, findings: STATE.score.findings, rules_version: STATE.score.rules_version }, null, 2));
 
