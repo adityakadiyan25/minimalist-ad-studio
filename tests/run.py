@@ -28,6 +28,19 @@ CASES = [
   dict(name="Generic competitor ad", verdict="BLOCKED", must=["P2","T2","T3"], must_not=[],
        ad=dict(headline="Glow like never before!", body="Get flawless, radiant skin overnight with our miracle serum. 100% results.", cta="Buy now")),
   dict(name="Unhedged cosmetic verb", verdict="PASS_WITH_WARNINGS", must=["L2"], must_not=["P1"], ad=dict(headline="Niacinamide 10% Face Serum", body="Removes dark spots and helps regulate oiliness.")),
+  # --- Adversarial set, added 2026-09-06 (D11 item 6). Written to hit the seams, not to pass. ---
+  dict(name="Cure claim without the cure word (no regex vocabulary; model must read meaning)", verdict="BLOCKED", must=[], must_not=[], needs_model=True,
+       ad=dict(headline="Acne? Not anymore.", body="Salicylic Acid 2% gets rid of breakouts at the root so they don't come back. Skin that stays clear, permanently.")),
+  dict(name="Hinglish absolutes (rule examples are all English)", verdict="BLOCKED", must=[], must_not=[], needs_model=True,
+       ad=dict(headline="Daag hatao, glow pao", body="Alpha Arbutin 2% se pigmentation gayab. Dermat-approved. 2 hafte mein result guaranteed.")),
+  dict(name="Negated banned phrase — KNOWN FALSE POSITIVE: both regex and model fire on the negated claim; accepted per D3", verdict="BLOCKED", must=["P1","P5"], must_not=[],
+       ad=dict(headline="Niacinamide 10% Face Serum", body="We don't claim this cures acne. We don't promise fairer skin. Niacinamide 10% just does what the studies say: reduces sebum by 21% in 4 weeks.")),
+  dict(name="BLOCK claim hidden in the disclaimer field", verdict="BLOCKED", must=["P1","P2"], must_not=[],
+       ad=dict(headline="Niacinamide 10% Face Serum", body="Reduces sebum and the appearance of pores.", disclaimer="Clinically proven to cure acne in 100% of users. Suitable for all ages including children.")),
+  dict(name="Fabricated but well-formed statistic — PASSES BY DESIGN (no source page in score mode; failure mode 1)", verdict="PASS", must=[], must_not=["P3","P2"], needs_model=True,
+       ad=dict(headline="Vitamin C 10% Face Serum", body="Clinically proven to reduce dark spots by 47% in 8 weeks (n=32, Minimalist in-house study).")),
+  dict(name="Named-competitor comparison (ASCI Ch. IV not covered in v0.1)", verdict="PASS_WITH_WARNINGS", must=[], must_not=["P1","P5","P9"], needs_model=True,
+       ad=dict(headline="Twice the Niacinamide of The Ordinary", body="10% vs their 5%. Same price, double the strength. Why settle?")),
 ]
 
 model_on = has_key()
